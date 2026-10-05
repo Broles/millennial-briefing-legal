@@ -60,3 +60,19 @@ Vor Abschluss einer solchen Änderung:
 ## Repo-spezifische Regeln
 Nach dieser globalen Policy immer die lokalen Repo-Regeln lesen. Bei Konflikten gilt die strengere bzw. spezifischere Repo-Regel, außer der Owner weist ausdrücklich etwas anderes an.
 <!-- GLOBAL_AGENT_POLICY_V1_END -->
+
+
+## Global board sync after agent operations
+
+After an agent creates, closes, reopens, labels, or otherwise changes one or more GitHub issues in a way that affects the shared Project, it must trigger **exactly one** global board sync at the end of that logical batch.
+
+Preferred command when shell access is available:
+
+`gh workflow run board-sync.yml --repo Broles/morning-briefing`
+
+Rules:
+- Batch multiple issue operations first, then trigger the sync once.
+- Do not trigger a sync after every single issue in a multi-issue batch.
+- If the repo provides a direct board helper that already updates the shared Project immediately, use that helper during the task; still trigger one global sync at the end only when repo/project consistency may have changed.
+- If the agent environment cannot dispatch GitHub Actions, do not fake success. Document that the hourly fallback will reconcile the board.
+- The scheduled Board Sync is only a safety net and runs hourly; agents should not rely on it for normal issue creation/update workflows.
