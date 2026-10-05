@@ -68,11 +68,14 @@ After an agent creates, closes, reopens, labels, or otherwise changes one or mor
 
 Preferred command when shell access is available:
 
-`gh workflow run board-sync.yml --repo Broles/morning-briefing`
+`gh workflow run board-sync.yml --repo Broles/Telli`
 
 Rules:
 - Batch multiple issue operations first, then trigger the sync once.
 - Do not trigger a sync after every single issue in a multi-issue batch.
 - If the repo provides a direct board helper that already updates the shared Project immediately, use that helper during the task; still trigger one global sync at the end only when repo/project consistency may have changed.
 - If the agent environment cannot dispatch GitHub Actions, do not fake success. Document that the hourly fallback will reconcile the board.
-- The scheduled Board Sync is only a safety net and runs hourly; agents should not rely on it for normal issue creation/update workflows.
+- The scheduled Board Sync in Broles/Telli is only a safety net and runs hourly; agents should not rely on it for normal issue creation/update workflows.
+
+
+Canonical agent/board policy source: **Broles/Telli** (`docs/GLOBAL_AGENT_POLICY.md`, `docs/board-rules.md`). Repo-specific rules here may extend, but should not redefine the global workflow.
